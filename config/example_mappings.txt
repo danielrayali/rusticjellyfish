@@ -9,3 +9,4 @@
 "Line1\nLine2" -> "Test1\nTest2"
 
 "@JELLYFISH_CONFIG_ID@###############" -> "0d02473e-52c1-434c-ac68-6cfe4d18d50f"
+"@JELLYFISH_CHECKIN_SECONDS@" -> "                          5"

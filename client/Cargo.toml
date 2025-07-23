@@ -1,9 +1,25 @@
+# Client Cargo.toml - Size optimized
 [package]
 name = "client"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
-tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.12.22", features = ["json"] }
-serde_json = "1.0"
+# Using native-tls for smallest TLS footprint
+native-tls = { version = "0.2", features = ["vendored"], optional = true }
+
+[features]
+default = ["tls"]
+tls = ["native-tls"]
+
+[profile.release]
+# Enable all optimizations for minimal binary size
+opt-level = "z"          # Optimize for size
+lto = true               # Enable Link Time Optimization
+codegen-units = 1        # Single codegen unit for better optimization
+panic = "abort"          # Abort on panic (smaller than unwinding)
+strip = true             # Strip symbols from binary
+
+[profile.release.package."*"]
+# Apply size optimizations to all dependencies
+opt-level = "z"
